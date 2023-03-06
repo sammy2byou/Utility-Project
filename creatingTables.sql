@@ -2,7 +2,7 @@
 CREATE TABLE UTILITY_PROVIDER
 (	business_num			INT         NOT NULL,
 	late_fee				DECIMAL,
-	address					VARCHAR,
+	addr					VARCHAR,
 	service_region			VARCHAR, --Multi-value attribute, how show that in sql?
 	utilities_offered		VARCHAR,
 	email					VARCHAR,
@@ -53,5 +53,6 @@ CREATE TABLE INVOICE
 	issue_date				DATETIME,
 	line_item_descritpion	VARCHAR, --multi
 	PRIMARY KEY (invoice_num));
+
 --below command is just for testing
 --DROP TABLE UTILITY, UTILITY_PROVIDER, CUSTOMER, ACCOUNT, INVOICE;
