@@ -1,6 +1,6 @@
---For milestone 2
 CREATE TABLE UTILITY_PROVIDER
 (	business_num			INT         NOT NULL,
+	operating_as			VARCHAR,
 	late_fee				DECIMAL,
 	addr					VARCHAR,
 	service_region			VARCHAR, --Multi-value attribute, how show that in sql?
@@ -8,6 +8,22 @@ CREATE TABLE UTILITY_PROVIDER
 	email					VARCHAR,
 	phone					VARCHAR,
 	PRIMARY KEY	(business_num));
+
+CREATE TABLE REGION
+	( region_id				INT NOT NULL,
+	  region_name			VARCHAR,
+	  PRIMARY KEY (region_id, region_name));
+
+CREATE TABLE SERVICE_REGION
+	( region_id				INT NOT NULL,
+	  region_name			VARCHAR,
+	  business_num			INT NOT NULL,
+	  business_name			VARCHAR,
+	  
+	  PRIMARY KEY (region_id),
+	  FOREIGN KEY (region_name) REFERENCES REGION(region_name),
+	  FOREIGN KEY (business_name) REFERENCES UTILITY_PROVIDER(operating_as)
+	);
 
 CREATE TABLE UTILITY
 (	utility_ID				INT		NOT NULL,
@@ -72,5 +88,3 @@ CREATE TABLE INVOICE
 	 MSRP					DECIMAL,
 
 	 PRIMARY KEY(product_num));
---below command is just for testing
---DROP TABLE UTILITY, UTILITY_PROVIDER, CUSTOMER, ACCOUNT, INVOICE;
