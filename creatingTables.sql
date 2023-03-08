@@ -45,14 +45,32 @@ CREATE TABLE INVOICE
 (	invoice_num				INT NOT NULL,
 	sub_total				DECIMAL,
 	balance					DECIMAL,
-	line_item				VARCHAR, --multi
 	account_num				INT,
 	due_Date				DATETIME,
 	total					DECIMAL,
 	tax						DECIMAL,
 	issue_date				DATETIME,
-	line_item_descritpion	VARCHAR, --multi
 	PRIMARY KEY (invoice_num));
 
+	CREATE TABLE LINE_ITEMS
+	(assoc_invoice_num		INT NOT NULL,
+	 line_descript			VARCHAR,
+	 line_item				DECIMAL,
+
+	PRIMARY KEY(assoc_invoice_num));
+
+	CREATE TABLE TRANSACTIONS
+	(assoc_invoice_num		INT NOT NULL,
+	 descript				VARCHAR,
+	 transaction_amount		DECIMAL NOT NULL,
+	  
+	PRIMARY KEY (assoc_invoice_num));
+
+	CREATE TABLE PRODUCT_OFFERING
+	(product_num			INT NOT NULL,
+	 descript				VARCHAR,
+	 MSRP					DECIMAL,
+
+	 PRIMARY KEY(product_num));
 --below command is just for testing
 --DROP TABLE UTILITY, UTILITY_PROVIDER, CUSTOMER, ACCOUNT, INVOICE;
