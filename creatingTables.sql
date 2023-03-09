@@ -1,6 +1,7 @@
---For milestone 2
+--DROP TABLE REGION, UTILITY_PROVIDER, SERVICE_REGION, ACCOUNT, CUSTOMER, INVOICE, LINE_ITEMS, PRODUCT_OFFERING, TRANSACTIONS, UTILITY;
 CREATE TABLE UTILITY_PROVIDER
 (	business_num			INT         NOT NULL,
+	operating_as			VARCHAR,
 	late_fee				DECIMAL,
 	addr					VARCHAR,
 	service_region			VARCHAR, --Multi-value attribute, how show that in sql?
@@ -8,6 +9,23 @@ CREATE TABLE UTILITY_PROVIDER
 	email					VARCHAR,
 	phone					VARCHAR,
 	PRIMARY KEY	(business_num));
+
+CREATE TABLE REGION
+	( region_id				INT NOT NULL,
+	  region_name			VARCHAR,
+	  PRIMARY KEY (region_id));
+
+CREATE TABLE SERVICE_REGION
+	( service_region_id		INT NOT NULL,
+	  region_id				INT NOT NULL,
+	  region_name			VARCHAR,
+	  business_num			INT NOT NULL,
+	  business_name			VARCHAR,
+	  
+	  PRIMARY KEY (service_region_id),
+	  FOREIGN KEY (region_id) REFERENCES REGION(region_id),
+	  FOREIGN KEY (business_num) REFERENCES UTILITY_PROVIDER(business_num)
+	);
 
 CREATE TABLE UTILITY
 (	utility_ID				INT		NOT NULL,
@@ -45,14 +63,30 @@ CREATE TABLE INVOICE
 (	invoice_num				INT NOT NULL,
 	sub_total				DECIMAL,
 	balance					DECIMAL,
-	line_item				VARCHAR, --multi
 	account_num				INT,
 	due_Date				DATETIME,
 	total					DECIMAL,
 	tax						DECIMAL,
 	issue_date				DATETIME,
-	line_item_descritpion	VARCHAR, --multi
 	PRIMARY KEY (invoice_num));
 
---below command is just for testing
---DROP TABLE UTILITY, UTILITY_PROVIDER, CUSTOMER, ACCOUNT, INVOICE;
+	CREATE TABLE LINE_ITEMS
+	(assoc_invoice_num		INT NOT NULL,
+	 line_descript			VARCHAR,
+	 line_item				DECIMAL,
+
+	PRIMARY KEY(assoc_invoice_num));
+
+	CREATE TABLE TRANSACTIONS
+	(assoc_invoice_num		INT NOT NULL,
+	 descript				VARCHAR,
+	 transaction_amount		DECIMAL NOT NULL,
+	  
+	PRIMARY KEY (assoc_invoice_num));
+
+	CREATE TABLE PRODUCT_OFFERING
+	(product_num			INT NOT NULL,
+	 descript				VARCHAR,
+	 MSRP					DECIMAL,
+
+	 PRIMARY KEY(product_num));
