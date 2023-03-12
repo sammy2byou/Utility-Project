@@ -13,18 +13,17 @@ CREATE TABLE UTILITY_PROVIDER
 CREATE TABLE REGION
 	( region_id				INT NOT NULL,
 	  region_name			VARCHAR,
-	  PRIMARY KEY (region_id));
+	  PRIMARY KEY (region_id, region_name));
 
 CREATE TABLE SERVICE_REGION
-	( service_region_id		INT NOT NULL,
-	  region_id				INT NOT NULL,
+	( region_id				INT NOT NULL,
 	  region_name			VARCHAR,
 	  business_num			INT NOT NULL,
 	  business_name			VARCHAR,
 	  
-	  PRIMARY KEY (service_region_id),
-	  FOREIGN KEY (region_id) REFERENCES REGION(region_id),
-	  FOREIGN KEY (business_num) REFERENCES UTILITY_PROVIDER(business_num)
+	  PRIMARY KEY (region_id),
+	  FOREIGN KEY (region_name) REFERENCES REGION(region_name),
+	  FOREIGN KEY (business_name) REFERENCES UTILITY_PROVIDER(operating_as)
 	);
 
 CREATE TABLE UTILITY
