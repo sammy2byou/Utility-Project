@@ -1,11 +1,13 @@
 /* CUSTOMER RELATED TABLES:
  * CUSTOMER
  * CUSTOMER_ADDRESS
+ * METER
+ * USAGE
  */
 -- Represents a given person that has utility accounts.
 CREATE TABLE CUSTOMER (
 	customer_id				INT,
-	mailing_preferences		VARCHAR,
+	mailing_preferences			VARCHAR,
 	email					VARCHAR,
 	phone					VARCHAR,
 	
@@ -32,12 +34,40 @@ CREATE TABLE CUSTOMER_ADDRESS (
 );
 
 
+--Represents a unique utility meter, tied to an account 
+CREATE TABLE METER (
+	meter_ID		INT NOT NULL,
+	account_number  INT NOT NULL,
+	service_ID		INT NOT NULL,
+
+	PRIMARY KEY(meter_ID),
+	FOREIGN KEY(account_number) REFERENCES ACCOUNT(account_number),
+	FOREIGN KEY (service_ID) REFERENCES PROVIDER_SERVICE_REGION (service_ID)
+);
+
+--Represents consumer usage(on a specific meter) over a 
+--time period(denoted by invoice). **Consumers may have multiple 
+--sites and thus more than one meter usage to be tied to their account
+--hence the need for a usage_ID to denote a unique id for each usage.
+
+CREATE TABLE USAGE(
+	usage_ID		INT NOT NULL,
+	invoice_num		INT NOT NULL,
+	meter_ID		INT NOT NULL,
+	consumption		DECIMAL NOT NULL,
+
+	PRIMARY KEY(usage_ID),
+	FOREIGN KEY(invoice_num) REFERENCES INVOICE(invoice_number),
+	FOREIGN KEY(meter_ID) REFERENCES METER(meter_ID),
+
+);
+
 
 /* UTILITY PROVIDER TABLES:
  * UTILITY
  * UTILITY_PROVIDER
+ * REGION
  * PROVIDER_SERVICE_REGION
- * PROVIDED_UTILITIES
  */
 -- Represents a type of utility, e.g. Electricity, Gas, etc. and
 -- stores the cost for the utility.
@@ -89,34 +119,6 @@ CREATE TABLE PROVIDER_SERVICE_REGION (
 	FOREIGN KEY (business_number) REFERENCES UTILITY_PROVIDER(business_number),
 	FOREIGN KEY (region_ID)	REFERENCES REGION(region_ID),
 	FOREIGN KEY (product_serviced) REFERENCES UTILITY (utility_id)
-);
-
---Represents a unique utility meter, tied to an account 
-CREATE TABLE METER (
-	meter_ID		INT NOT NULL,
-	account_number  INT NOT NULL,
-	service_ID		INT NOT NULL,
-
-	PRIMARY KEY(meter_ID),
-	FOREIGN KEY(account_number) REFERENCES ACCOUNT(account_number),
-	FOREIGN KEY (service_ID) REFERENCES PROVIDER_SERVICE_REGION (service_ID)
-);
-
---Represents consumer usage(on a specific meter) over a 
---time period(denoted by invoice). **Consumers may have multiple 
---sites and thus more than one meter usage to be tied to their account
---hence the need for a usage_ID to denote a unique id for each usage.
-
-CREATE TABLE USAGE(
-	usage_ID		INT NOT NULL,
-	invoice_num		INT NOT NULL,
-	meter_ID		INT NOT NULL,
-	consumption		DECIMAL NOT NULL,
-
-	PRIMARY KEY(usage_ID),
-	FOREIGN KEY(invoice_num) REFERENCES INVOICE(invoice_number),
-	FOREIGN KEY(meter_ID) REFERENCES METER(meter_ID),
-
 );
 
 /* ACCOUNT AND INVOICE RELATED TABLES:
