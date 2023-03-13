@@ -14,6 +14,16 @@ CREATE TABLE CUSTOMER (
 	PRIMARY KEY(customer_id)
 );
 
+--Represents a geographical region, and the government mandated tax rate for 
+--that specific region
+CREATE TABLE REGION (
+	region_ID		INT NOT NULL,
+	region_name		VARCHAR,
+	tax_rate		DECIMAL NOT NULL,
+
+	PRIMARY KEY (region_ID)
+);
+
 -- Represents addressess for customer sites, the function for each is determined
 -- by the address_description attribute.
 CREATE TABLE CUSTOMER_ADDRESS (
@@ -32,36 +42,6 @@ CREATE TABLE CUSTOMER_ADDRESS (
 	FOREIGN KEY (customer_id) REFERENCES CUSTOMER(customer_id),
 	FOREIGN KEY (region) REFERENCES REGION(region_id)
 );
-
-
---Represents a unique utility meter, tied to an account 
-CREATE TABLE METER (
-	meter_ID		INT NOT NULL,
-	account_number  INT NOT NULL,
-	service_ID		INT NOT NULL,
-
-	PRIMARY KEY(meter_ID),
-	FOREIGN KEY(account_number) REFERENCES ACCOUNT(account_number),
-	FOREIGN KEY (service_ID) REFERENCES PROVIDER_SERVICE_REGION (service_ID)
-);
-
---Represents consumer usage(on a specific meter) over a 
---time period(denoted by invoice). **Consumers may have multiple 
---sites and thus more than one meter usage to be tied to their account
---hence the need for a usage_ID to denote a unique id for each usage.
-
-CREATE TABLE USAGE(
-	usage_ID		INT NOT NULL,
-	invoice_num		INT NOT NULL,
-	meter_ID		INT NOT NULL,
-	consumption		DECIMAL NOT NULL,
-
-	PRIMARY KEY(usage_ID),
-	FOREIGN KEY(invoice_num) REFERENCES INVOICE(invoice_number),
-	FOREIGN KEY(meter_ID) REFERENCES METER(meter_ID),
-
-);
-
 
 /* UTILITY PROVIDER TABLES:
  * UTILITY
@@ -95,16 +75,6 @@ CREATE TABLE UTILITY_PROVIDER (
 	country					VARCHAR,
 
 	PRIMARY KEY	(business_number)
-);
-
---Represents a geographical region, and the government mandated tax rate for 
---that specific region
-CREATE TABLE REGION (
-	region_ID		INT NOT NULL,
-	region_name		VARCHAR,
-	tax_rate		DECIMAL NOT NULL,
-
-	PRIMARY KEY (region_ID)
 );
 
 -- Stores the regions under which given utility providers
@@ -141,13 +111,10 @@ CREATE TABLE ACCOUNT (
 	service_start_date		DATETIME,
 	service_end_date		DATETIME,
 	balance					DECIMAL,
-	
 	bank_account			INT,
 	card_num				INT,
 	card_expiry				DATETIME,
-	card_CVV				INT,
-
-											
+	card_CVV				INT,											
 	overdue_payment			VARCHAR, 		-- uncertain on what the role of this is.
 
 	PRIMARY KEY (account_number),
@@ -156,7 +123,6 @@ CREATE TABLE ACCOUNT (
 	FOREIGN KEY (utility_id) REFERENCES PROVIDER_SERVICE_REGION (service_ID)
 
 );
-
 
 -- Represents an invoice, issued by the utility provider
 -- for the given account.
@@ -205,4 +171,31 @@ CREATE TABLE ACCOUNT_TRANSACTIONS (
 	PRIMARY KEY (transaction_id),
 	FOREIGN KEY (account_number) REFERENCES ACCOUNT(account_number),
 	FOREIGN KEY (invoice_number) REFERENCES INVOICE(invoice_number)
+);
+
+--Represents a unique utility meter, tied to an account 
+CREATE TABLE METER (
+	meter_ID		INT NOT NULL,
+	account_number  INT NOT NULL,
+	service_ID		INT NOT NULL,
+
+	PRIMARY KEY(meter_ID),
+	FOREIGN KEY(account_number) REFERENCES ACCOUNT(account_number),
+	FOREIGN KEY (service_ID) REFERENCES PROVIDER_SERVICE_REGION (service_ID)
+);
+
+--Represents consumer usage(on a specific meter) over a 
+--time period(denoted by invoice). **Consumers may have multiple 
+--sites and thus more than one meter usage to be tied to their account
+--hence the need for a usage_ID to denote a unique id for each usage.
+CREATE TABLE USAGE(
+	usage_ID		INT NOT NULL,
+	invoice_num		INT NOT NULL,
+	meter_ID		INT NOT NULL,
+	consumption		DECIMAL NOT NULL,
+
+	PRIMARY KEY(usage_ID),
+	FOREIGN KEY(invoice_num) REFERENCES INVOICE(invoice_number),
+	FOREIGN KEY(meter_ID) REFERENCES METER(meter_ID),
+
 );
