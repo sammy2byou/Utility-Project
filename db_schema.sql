@@ -72,6 +72,7 @@ CREATE TABLE PROVIDER_SERVICE_REGION (
 	business_number			INT NOT NULL,
 	service_region_name		VARCHAR,
 
+	PRIMARY KEY (business_number, service_region_name),
 	FOREIGN KEY (business_number) REFERENCES UTILITY_PROVIDER(business_number)
 );
 
