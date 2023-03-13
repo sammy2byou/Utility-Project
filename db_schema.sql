@@ -25,6 +25,7 @@ CREATE TABLE CUSTOMER_ADDRESS (
 	region					VARCHAR,
 	country					VARCHAR,
 
+	PRIMARY KEY (customer_id, address_description),
 	FOREIGN KEY (customer_id) REFERENCES CUSTOMER(customer_id)
 );
 
