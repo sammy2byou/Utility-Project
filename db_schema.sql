@@ -160,13 +160,14 @@ CREATE TABLE INVOICE_ITEM (
 
 -- Represents payments and charges on a given account.
 CREATE TABLE ACCOUNT_TRANSACTIONS (
+	transaction_id			INT NOT NULL,
 	account_number			INT NOT NULL,
 	invoice_number			INT,			-- can be null, transaction not necessarily related to invoice
 	trasaction_description	VARCHAR,
 	transaction_amount		DECIMAL NOT NULL,
 	issuer					INT NOT NULL,	-- who issued the transaction, generally customer for a payment and the 
 											-- company for a charge. requires the company to have an account (I think)
-	
+	PRIMARY KEY (transaction_id),
 	FOREIGN KEY (account_number) REFERENCES ACCOUNT(account_number),
 	FOREIGN KEY (invoice_number) REFERENCES INVOICE(invoice_number)
 );
