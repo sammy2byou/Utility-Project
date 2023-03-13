@@ -1,3 +1,10 @@
+/* Database Project Phase 2
+ * By:
+ *		Josiah Henson
+ *		Samantha McKenzie
+ *		Matthew Graham
+*/
+
 /* CUSTOMER RELATED TABLES:
  * CUSTOMER
  * CUSTOMER_ADDRESS
