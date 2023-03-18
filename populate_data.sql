@@ -102,3 +102,10 @@ VALUES(0, 'email', 'email0@email.com', '009-999-9999'),
 (99, 'mail', 'email99@email.com', '9909-999-9999');
 SELECT * FROM CUSTOMER;
 
+DELETE FROM UTILITY_PROVIDER WHERE business_number <1004;
+INSERT INTO UTILITY_PROVIDER
+VALUES
+(1001, 0.05, 'company1@email.com', '905-123-1234', 23, 'Street one', 'N1C 9P9', 'Windsor', 'Canada'),
+(1002, 0.05, 'company1@email.com', '905-123-1234', 23, 'Street one', 'N1C 9P9', 'Windsor', 'Canada'),
+(1003,0.05, 'company1@email.com', '905-123-1234', 23, 'Street one', 'N1C 9P9', 'Windsor', 'Canada');
+SELECT * FROM UTILITY_PROVIDER;
