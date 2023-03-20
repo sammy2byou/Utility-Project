@@ -1,8 +1,5 @@
 DELETE FROM CUSTOMER WHERE customer_id<200;
-<<<<<<< Updated upstream
-=======
 DELETE FROM UTILITY_PROVIDER WHERE business_number <818125408;
->>>>>>> Stashed changes
 INSERT INTO CUSTOMER
 VALUES
 (1,  'Jackson',  'Castillo',  'Digital',  'castilja@outlook.com',  '780-555-0161'),
@@ -105,17 +102,7 @@ VALUES
 (98,  'Charlie',  'Scott',  'Mail',  'scottch@gmail.com',  '819-555-0167'),
 (99,  'Anthony',  'Wilson',  'Digital',  'wilsonan@gmail.com',  '819-555-0123'),
 (100,  'Raelynn',  'Caron',  'Mail',  'caronra@sympatico.ca',  '867-555-0161');
-<<<<<<< Updated upstream
 
-SELECT * FROM CUSTOMER;
-
-DELETE FROM UTILITY_PROVIDER WHERE business_number <1004;
-INSERT INTO UTILITY_PROVIDER
-VALUES
-(1001, 0.05, 'company1@email.com', '905-123-1234', 23, 'Street one', 'N1C 9P9', 'Windsor', 'Canada'),
-(1002, 0.05, 'company1@email.com', '905-123-1234', 23, 'Street one', 'N1C 9P9', 'Windsor', 'Canada'),
-(1003,0.05, 'company1@email.com', '905-123-1234', 23, 'Street one', 'N1C 9P9', 'Windsor', 'Canada');
-=======
 SELECT * FROM CUSTOMER;
 
 DELETE FROM REGION WHERE tax_rate<100;
@@ -136,12 +123,9 @@ VALUES
 ('YT',  'Yukon', 5);
 SELECT * FROM REGION;
 
-
-
 INSERT INTO UTILITY_PROVIDER
 VALUES
 ('221568934', 'Enbridge', 1.5, 'webmaster-corp@enbridge.com ',  '403-231-3900',  '200',  'Fifth Avenue Place',  'T2P 3L8',  'Calgary',  (SELECT REGION.region_ID FROM REGION WHERE REGION.region_ID = 'AB'),  'Canada'),
 ('818125405', 'Hydro One', 1.5, '',  '888-664-9376',  'P.O. Box 5700',  '',  'L3R 1C8',  'Toronto',  (SELECT REGION.region_ID FROM REGION WHERE REGION.region_ID ='ON'),  'Canada'),
 ('218911783', 'Cogeco', 3, 'businesssolutions@cogeco.com',  '833-947-2526',  '1',  'Place Ville-Marie',  'H3B 2B6',  'Montreal',  (SELECT REGION.region_ID FROM REGION WHERE REGION.region_ID = 'QC'),  'Canada');
->>>>>>> Stashed changes
 SELECT * FROM UTILITY_PROVIDER;
