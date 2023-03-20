@@ -26,7 +26,11 @@ CREATE TABLE CUSTOMER (
 --Represents a geographical region, and the government mandated tax rate for 
 --that specific region
 CREATE TABLE REGION (
+<<<<<<< Updated upstream
 	region_ID		INT NOT NULL,
+=======
+	region_ID		VARCHAR(2) NOT NULL,
+>>>>>>> Stashed changes
 	region_name		VARCHAR(30),
 	tax_rate		DECIMAL NOT NULL,
 
@@ -37,7 +41,11 @@ CREATE TABLE REGION (
 -- by the address_description attribute.
 CREATE TABLE CUSTOMER_ADDRESS (
 	customer_id				INT NOT NULL,
+<<<<<<< Updated upstream
 	region					INT NOT NULL, 
+=======
+	region					VARCHAR(2) NOT NULL, 
+>>>>>>> Stashed changes
 	address_description		VARCHAR(30),
 	street_number			INT,
 	street_name				VARCHAR(30),
@@ -74,23 +82,33 @@ CREATE TABLE UTILITY (
 -- see PROVIDER_SERVICE_REGION and PROVIDED_UTILITIES
 CREATE TABLE UTILITY_PROVIDER (	
 	business_number			INT NOT NULL,   -- As per Articles of Incorporation
+	business_name			VARCHAR(30),
 	late_interest_rate		DECIMAL,		-- Rate applied to late payments
 	email					VARCHAR(30),		-- Main contact email
 	phone					VARCHAR(30),		-- Main contact phone
+<<<<<<< Updated upstream
 	street_number			INT,			
 	street_name				VARCHAR(30),
 	postal_code				VARCHAR(30),		-- Head office address
 	city					VARCHAR(30),     
+=======
+	street_number			VARCHAR(30),			
+	street_name				VARCHAR(30),
+	postal_code				VARCHAR(30),		-- Head office address
+	city					VARCHAR(30),
+	region					VARCHAR(2),
+>>>>>>> Stashed changes
 	country					VARCHAR(30),
 
-	PRIMARY KEY	(business_number)
+	PRIMARY KEY	(business_number),
+	FOREIGN KEY (region) REFERENCES REGION(region_ID)
 );
 
 -- Stores the regions under which given utility providers
 -- operate.
 CREATE TABLE PROVIDER_SERVICE_REGION (	
 	service_ID				INT NOT NULL,
-	region_ID				INT NOT NULL,
+	region_ID				VARCHAR(2) NOT NULL,
 	business_number			INT NOT NULL,
 	product_serviced		INT NOT NULL,
 
