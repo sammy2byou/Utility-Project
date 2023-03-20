@@ -14,6 +14,8 @@
 -- Represents a given person that has utility accounts.
 CREATE TABLE CUSTOMER (
 	customer_id				INT,
+	fisrt_name				VARCHAR(20),
+	last_name				VARCHAR(20),
 	mailing_preferences			VARCHAR,
 	email					VARCHAR,
 	phone					VARCHAR,
