@@ -1,8 +1,7 @@
-/* Database Project Phase 2
- * By:
- *		Josiah Henson
- *		Samantha McKenzie
- *		Matthew Graham
+/* By:
+ *	Josiah Henson
+ *	Samantha McKenzie
+ *	Matthew Graham
 */
 
 /* CUSTOMER RELATED TABLES:
@@ -39,7 +38,7 @@ CREATE TABLE CUSTOMER_ADDRESS (
 	customer_id				INT NOT NULL,
 	region					VARCHAR(2) NOT NULL, 
 	address_description		VARCHAR(30),
-	street_number			INT,
+	street_number			VARCHAR (30),
 	street_name				VARCHAR(30),
 	postal_code				VARCHAR(30),
 	city					VARCHAR(30),
