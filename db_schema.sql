@@ -27,7 +27,7 @@ CREATE TABLE CUSTOMER (
 CREATE TABLE REGION (
 	region_ID		VARCHAR(2) NOT NULL,
 	region_name		VARCHAR(30),
-	tax_rate		DECIMAL NOT NULL,
+	tax_rate		DECIMAL(10,3) NOT NULL,
 
 	PRIMARY KEY (region_ID)
 );
@@ -43,8 +43,8 @@ CREATE TABLE CUSTOMER_ADDRESS (
 	postal_code				VARCHAR(30),
 	city					VARCHAR(30),
 	country					VARCHAR(30),
-	lat						DECIMAL, --Latitude for sites without an address
-	long					DECIMAL, --Longitude for sites without an address
+	lat						DECIMAL(10,3), --Latitude for sites without an address
+	long					DECIMAL(10,3), --Longitude for sites without an address
 
 	PRIMARY KEY (customer_id, address_description),
 	FOREIGN KEY (customer_id) REFERENCES CUSTOMER(customer_id),
@@ -62,7 +62,7 @@ CREATE TABLE CUSTOMER_ADDRESS (
 CREATE TABLE UTILITY (
 	utility_id				INT	NOT NULL,
 	utility_description		VARCHAR(30),
-	unit_cost				DECIMAL,
+	unit_cost				DECIMAL(10,2),
 	measurement_units		VARCHAR(30),
 
 	PRIMARY KEY (utility_id)
@@ -74,7 +74,7 @@ CREATE TABLE UTILITY (
 CREATE TABLE UTILITY_PROVIDER (	
 	business_number			INT NOT NULL,   -- As per Articles of Incorporation
 	business_name			VARCHAR(30),
-	late_interest_rate		DECIMAL,		-- Rate applied to late payments
+	late_interest_rate		DECIMAL(10,3),		-- Rate applied to late payments
 	email					VARCHAR(30),		-- Main contact email
 	phone					VARCHAR(30),		-- Main contact phone
 
@@ -122,7 +122,7 @@ CREATE TABLE ACCOUNT (
 	next_invoice_date		DATETIME,
 	service_start_date		DATETIME,
 	service_end_date		DATETIME,
-	balance					DECIMAL,
+	balance					DECIMAL(10,2),
 	bank_account			INT,
 	card_num				INT,
 	card_expiry				DATETIME,
@@ -143,7 +143,7 @@ CREATE TABLE INVOICE (
 	account_number			INT NOT NULL,
 	issue_date				DATETIME,
 	due_Date				DATETIME,
-	total					DECIMAL,
+	total					DECIMAL(10,2),
 	
 	PRIMARY KEY (invoice_number),
 	FOREIGN KEY (account_number) REFERENCES ACCOUNT(account_number)
@@ -153,7 +153,7 @@ CREATE TABLE INVOICE (
 CREATE TABLE LINE_ITEM (
 	line_item				INT,     --ie. inventory num
 	line_item_description	VARCHAR(30), 
-	cost					DECIMAL,
+	cost					DECIMAL(10,2),
 
 	PRIMARY KEY (line_item)
 );
@@ -162,7 +162,7 @@ CREATE TABLE LINE_ITEM (
 CREATE TABLE INVOICE_ITEM (
 	invoice_number			INT,
 	line_item				INT,
-	quantity				DECIMAL,
+	quantity				DECIMAL(10,3),
 
 	PRIMARY KEY (line_item),
 	FOREIGN KEY (invoice_number) REFERENCES INVOICE(invoice_number),
@@ -173,7 +173,7 @@ CREATE TABLE INVOICE_ITEM (
 CREATE TABLE ACCOUNT_TRANSACTIONS (
 	transaction_id			INT NOT NULL,
 	account_number			INT NOT NULL,
-	transaction_amount		DECIMAL NOT NULL,
+	transaction_amount		DECIMAL(10,2) NOT NULL,
 	invoice_number			INT,			-- can be null, transaction not necessarily related to invoice
 	trasaction_description	VARCHAR(30),
 	transit_num				INT,   --provided by bank (can be used to find payer and payee)
@@ -204,7 +204,7 @@ CREATE TABLE USAGE(
 	usage_ID		INT NOT NULL,
 	invoice_num		INT NOT NULL,
 	meter_ID		INT NOT NULL,
-	consumption		DECIMAL NOT NULL,
+	consumption		DECIMAL(10,3) NOT NULL,
 
 	PRIMARY KEY(usage_ID),
 	FOREIGN KEY(invoice_num) REFERENCES INVOICE(invoice_number),
