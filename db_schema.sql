@@ -4,7 +4,8 @@
  *	Matthew Graham
 */
 
-/* CUSTOMER RELATED TABLES:
+/* 
+RELATED TABLES:
  * CUSTOMER
  * CUSTOMER_ADDRESS
  * METER
@@ -62,7 +63,7 @@ CREATE TABLE CUSTOMER_ADDRESS (
 CREATE TABLE UTILITY (
 	utility_id				INT	NOT NULL,
 	utility_description		VARCHAR(30),
-	unit_cost				DECIMAL(10,2),
+	unit_cost				DECIMAL(10,3),
 	measurement_units		VARCHAR(30),
 
 	PRIMARY KEY (utility_id)
@@ -124,8 +125,8 @@ CREATE TABLE ACCOUNT (
 	service_end_date		DATETIME,
 	balance					DECIMAL(10,2),
 	bank_account			INT,
-	card_num				INT,
-	card_expiry				DATETIME,
+	card_num				VARCHAR(16),
+	card_expiry				DATE,
 	card_CVV				INT,											
 	overdue_payment			VARCHAR(30), 		-- uncertain on what the role of this is.
 
