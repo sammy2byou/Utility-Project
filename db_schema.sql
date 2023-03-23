@@ -154,6 +154,7 @@ CREATE TABLE INVOICE (
 CREATE TABLE LINE_ITEM (
 	line_item				INT,     --ie. inventory num
 	line_item_description	VARCHAR(30), 
+	utility_id				INT,	------------CHANGED
 	cost					DECIMAL(10,2),
 
 	PRIMARY KEY (line_item)
@@ -209,6 +210,5 @@ CREATE TABLE USAGE(
 
 	PRIMARY KEY(usage_ID),
 	FOREIGN KEY(invoice_num) REFERENCES INVOICE(invoice_number),
-	FOREIGN KEY(meter_ID) REFERENCES METER(meter_ID),
-
+	FOREIGN KEY(meter_ID) REFERENCES METER(meter_ID)
 );
