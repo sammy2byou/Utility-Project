@@ -1,11 +1,11 @@
-/* Database Project Phase 2
- * By:
- *		Josiah Henson
- *		Samantha McKenzie
- *		Matthew Graham
+/* By:
+ *	Josiah Henson
+ *	Samantha McKenzie
+ *	Matthew Graham
 */
 
-/* CUSTOMER RELATED TABLES:
+/* 
+RELATED TABLES:
  * CUSTOMER
  * CUSTOMER_ADDRESS
  * METER
@@ -14,11 +14,11 @@
 -- Represents a given person that has utility accounts.
 CREATE TABLE CUSTOMER (
 	customer_id				INT,
-	fisrt_name				VARCHAR(20),
-	last_name				VARCHAR(20),
-	mailing_preferences			VARCHAR,
-	email					VARCHAR,
-	phone					VARCHAR,
+	fisrt_name				VARCHAR(30),
+	last_name				VARCHAR(30),
+	mailing_preferences			VARCHAR(30),
+	email					VARCHAR(30),
+	phone					VARCHAR(30),
 	
 	PRIMARY KEY(customer_id)
 );
@@ -26,9 +26,9 @@ CREATE TABLE CUSTOMER (
 --Represents a geographical region, and the government mandated tax rate for 
 --that specific region
 CREATE TABLE REGION (
-	region_ID		INT NOT NULL,
-	region_name		VARCHAR,
-	tax_rate		DECIMAL NOT NULL,
+	region_ID		VARCHAR(2) NOT NULL,
+	region_name		VARCHAR(30),
+	tax_rate		DECIMAL(10,3) NOT NULL,
 
 	PRIMARY KEY (region_ID)
 );
@@ -37,15 +37,15 @@ CREATE TABLE REGION (
 -- by the address_description attribute.
 CREATE TABLE CUSTOMER_ADDRESS (
 	customer_id				INT NOT NULL,
-	region					INT NOT NULL, 
-	address_description		VARCHAR,
-	street_number			INT,
-	street_name				VARCHAR,
-	postal_code				VARCHAR,
-	city					VARCHAR,
-	country					VARCHAR,
-	lat						DECIMAL, --Latitude for sites without an address
-	long					DECIMAL, --Longitude for sites without an address
+	region					VARCHAR(2) NOT NULL, 
+	address_description		VARCHAR(30),
+	street_number			VARCHAR (30),
+	street_name				VARCHAR(30),
+	postal_code				VARCHAR(30),
+	city					VARCHAR(30),
+	country					VARCHAR(30),
+	lat						DECIMAL(10,3), --Latitude for sites without an address
+	long					DECIMAL(10,3), --Longitude for sites without an address
 
 	PRIMARY KEY (customer_id, address_description),
 	FOREIGN KEY (customer_id) REFERENCES CUSTOMER(customer_id),
@@ -62,9 +62,9 @@ CREATE TABLE CUSTOMER_ADDRESS (
 -- stores the cost for the utility.
 CREATE TABLE UTILITY (
 	utility_id				INT	NOT NULL,
-	utility_description		VARCHAR,
-	unit_cost				DECIMAL,
-	measurement_units		VARCHAR,
+	utility_description		VARCHAR(30),
+	unit_cost				DECIMAL(10,3),
+	measurement_units		VARCHAR(30),
 
 	PRIMARY KEY (utility_id)
 );
@@ -74,23 +74,27 @@ CREATE TABLE UTILITY (
 -- see PROVIDER_SERVICE_REGION and PROVIDED_UTILITIES
 CREATE TABLE UTILITY_PROVIDER (	
 	business_number			INT NOT NULL,   -- As per Articles of Incorporation
-	late_interest_rate		DECIMAL,		-- Rate applied to late payments
-	email					VARCHAR,		-- Main contact email
-	phone					VARCHAR,		-- Main contact phone
-	street_number			INT,			
-	street_name				VARCHAR,
-	postal_code				VARCHAR,		-- Head office address
-	city					VARCHAR,     
-	country					VARCHAR,
+	business_name			VARCHAR(30),
+	late_interest_rate		DECIMAL(10,3),		-- Rate applied to late payments
+	email					VARCHAR(30),		-- Main contact email
+	phone					VARCHAR(30),		-- Main contact phone
 
-	PRIMARY KEY	(business_number)
+	street_number			VARCHAR(30),			
+	street_name				VARCHAR(30),
+	postal_code				VARCHAR(30),		-- Head office address
+	city					VARCHAR(30),
+	region					VARCHAR(2),
+	country					VARCHAR(30),
+
+	PRIMARY KEY	(business_number),
+	FOREIGN KEY (region) REFERENCES REGION(region_ID)
 );
 
 -- Stores the regions under which given utility providers
 -- operate.
 CREATE TABLE PROVIDER_SERVICE_REGION (	
 	service_ID				INT NOT NULL,
-	region_ID				INT NOT NULL,
+	region_ID				VARCHAR(2) NOT NULL,
 	business_number			INT NOT NULL,
 	product_serviced		INT NOT NULL,
 
@@ -115,16 +119,16 @@ CREATE TABLE ACCOUNT (
 	customer_id				INT NOT NULL,
 	business_number			INT NOT NULL,
 	utility_id				INT NOT NULL,
-	payment_method			VARCHAR NOT NULL,
+	payment_method			VARCHAR(30) NOT NULL,
 	next_invoice_date		DATETIME,
 	service_start_date		DATETIME,
 	service_end_date		DATETIME,
-	balance					DECIMAL,
+	balance					DECIMAL(10,2),
 	bank_account			INT,
-	card_num				INT,
-	card_expiry				DATETIME,
+	card_num				VARCHAR(16),
+	card_expiry				DATE,
 	card_CVV				INT,											
-	overdue_payment			VARCHAR, 		-- uncertain on what the role of this is.
+	overdue_payment			VARCHAR(30), 		-- uncertain on what the role of this is.
 
 	PRIMARY KEY (account_number),
 	FOREIGN KEY (customer_id) REFERENCES CUSTOMER(customer_id),
@@ -140,7 +144,7 @@ CREATE TABLE INVOICE (
 	account_number			INT NOT NULL,
 	issue_date				DATETIME,
 	due_Date				DATETIME,
-	total					DECIMAL,
+	total					DECIMAL(10,2),
 	
 	PRIMARY KEY (invoice_number),
 	FOREIGN KEY (account_number) REFERENCES ACCOUNT(account_number)
@@ -149,8 +153,9 @@ CREATE TABLE INVOICE (
 -- Represents an item that a utility provider could charge for.
 CREATE TABLE LINE_ITEM (
 	line_item				INT,     --ie. inventory num
-	line_item_description	VARCHAR, 
-	cost					DECIMAL,
+	line_item_description	VARCHAR(30), 
+	utility_id				INT,	------------CHANGED
+	cost					DECIMAL(10,2),
 
 	PRIMARY KEY (line_item)
 );
@@ -159,7 +164,7 @@ CREATE TABLE LINE_ITEM (
 CREATE TABLE INVOICE_ITEM (
 	invoice_number			INT,
 	line_item				INT,
-	quantity				DECIMAL,
+	quantity				DECIMAL(10,3),
 
 	PRIMARY KEY (line_item),
 	FOREIGN KEY (invoice_number) REFERENCES INVOICE(invoice_number),
@@ -170,9 +175,9 @@ CREATE TABLE INVOICE_ITEM (
 CREATE TABLE ACCOUNT_TRANSACTIONS (
 	transaction_id			INT NOT NULL,
 	account_number			INT NOT NULL,
-	transaction_amount		DECIMAL NOT NULL,
+	transaction_amount		DECIMAL(10,2) NOT NULL,
 	invoice_number			INT,			-- can be null, transaction not necessarily related to invoice
-	trasaction_description	VARCHAR,
+	trasaction_description	VARCHAR(30),
 	transit_num				INT,   --provided by bank (can be used to find payer and payee)
 								   --left null in cases such as a charge being applied, where
 								   --money does not exchange hands.
@@ -201,10 +206,9 @@ CREATE TABLE USAGE(
 	usage_ID		INT NOT NULL,
 	invoice_num		INT NOT NULL,
 	meter_ID		INT NOT NULL,
-	consumption		DECIMAL NOT NULL,
+	consumption		DECIMAL(10,3) NOT NULL,
 
 	PRIMARY KEY(usage_ID),
 	FOREIGN KEY(invoice_num) REFERENCES INVOICE(invoice_number),
-	FOREIGN KEY(meter_ID) REFERENCES METER(meter_ID),
-
+	FOREIGN KEY(meter_ID) REFERENCES METER(meter_ID)
 );
