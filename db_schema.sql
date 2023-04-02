@@ -14,9 +14,9 @@ RELATED TABLES:
 -- Represents a given person that has utility accounts.
 CREATE TABLE CUSTOMER (
 	customer_id				INT,
-	fisrt_name				VARCHAR(30),
+	first_name				VARCHAR(30),
 	last_name				VARCHAR(30),
-	mailing_preferences			VARCHAR(30),
+	mailing_preferences		VARCHAR(30),
 	email					VARCHAR(30),
 	phone					VARCHAR(30),
 	

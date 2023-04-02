@@ -1,0 +1,2 @@
+- customer will show all of the accounts for a given customer
+	- any individual customer would access this by filtering that table for their customer_id (obviously through some frontend that hides the db)
