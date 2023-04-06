@@ -30,4 +30,3 @@ JOIN CUSTOMER ON ACCOUNT.customer_id = CUSTOMER.customer_id
 JOIN CUSTOMER_ADDRESS ON CUSTOMER.customer_id = CUSTOMER_ADDRESS.customer_id
 JOIN REGION ON CUSTOMER_ADDRESS.region = REGION.region_id
 WHERE INVOICE_ITEMS.Invoice = INVOICE.invoice_number AND INVOICE.account_number = ACCOUNT.account_number
-GROUP BY INVOICE.account_number, INVOICE.invoice_number, INVOICE.issue_date, INVOICE.due_date, REGION.tax_rate;
