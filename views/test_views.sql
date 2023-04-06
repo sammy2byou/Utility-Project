@@ -1,5 +1,8 @@
-SELECT * FROM customer_accounts
+SELECT * FROM CUSTOMER_ACCOUNTS
 ORDER BY "Full Name"
 
-SELECT * FROM customer_information
+SELECT * FROM CUSTOMER_INFORMATION
 ORDER BY "Full Name"
+
+SELECT * FROM INVOICE_ITEMS
+ORDER BY "Account Number"

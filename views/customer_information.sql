@@ -1,6 +1,6 @@
--- DROP VIEW customer_information;
+-- DROP VIEW CUSTOMER_INFORMATION;
 
-CREATE VIEW customer_information AS
+CREATE VIEW CUSTOMER_INFORMATION AS
 SELECT
 	CUSTOMER.first_name + ' ' + CUSTOMER.last_name AS "Full Name",
 	CUSTOMER.mailing_preferences AS "Mailing Preferences",

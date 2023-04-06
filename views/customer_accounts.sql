@@ -2,10 +2,10 @@
 -- In VSCode, you can just select the statements you want to run and run
 -- them, which is necessary in this file.
 -- The DROP statement below is for deleting the view before making changes
--- DROP VIEW customer_accounts;
+-- DROP VIEW CUSTOMER_ACCOUNTS;
 
 -- table of all accounts, pulling the customer name, utility & utility provider
-CREATE VIEW customer_accounts AS
+CREATE VIEW CUSTOMER_ACCOUNTS AS
 SELECT
 	ACCOUNT.account_number AS "Account Number",
 	CUSTOMER.first_name + ' ' + CUSTOMER.last_name AS "Full Name",
