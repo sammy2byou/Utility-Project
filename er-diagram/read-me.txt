@@ -1,0 +1,2 @@
+The "Final-ER-Diagram Relations only" is a way to see the relations easier.
+The full diagram is the other file "Final-ER-Diagram-Relations"
